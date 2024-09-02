@@ -5,6 +5,12 @@ const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+const nav = document.querySelector('.nav');
+
 ///////////////////////////////////////
 // Modal window
 
@@ -69,11 +75,8 @@ document.querySelector('.nav__links').addEventListener('click', e => {
 
 /////////////////////////////////////
 // Tabbed component
-// Click on tab -> active elements and display content + deactivate other elements
-const tabsContainer = document.querySelector('.operations__tab-container');
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContent = document.querySelectorAll('.operations__content');
 
+// Click on tab -> active elements and display content + deactivate other elements
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
   console.log(clicked);
@@ -95,3 +98,26 @@ tabsContainer.addEventListener('click', function (e) {
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
+
+////////////////////////////////
+// Menu fade animation
+
+// Mouseover -> Highlight current element & fade out other
+// Mouseout -> Set all elements's opacity to 1
+
+const handlerHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    // Assume has various .nav__link inside our html file
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+
+    // Fade out other elements
+    siblings.forEach(el => el !== link && (el.style.opacity = this));
+    logo.style.opacity = this;
+  }
+};
+
+nav.addEventListener('mouseover', handlerHover.bind(0.5));
+
+nav.addEventListener('mouseout', handlerHover.bind(1));
